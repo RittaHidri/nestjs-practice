@@ -69,13 +69,18 @@ export class BookService {
     return book;
   }
 
-  remove(id: number): void {
-    const index = this.books.findIndex((book) => book.id === id);
+  remove(id: number): { message: string; data: Book } {
+  const index = this.books.findIndex((book) => book.id === id);
 
-    if (index === -1) {
-      throw new NotFoundException('Book not found');
-    }
-
-    this.books.splice(index, 1);
+  if (index === -1) {
+    throw new NotFoundException('Book not found');
   }
+
+  const removedBook = this.books.splice(index, 1)[0];
+
+  return {
+    message: 'Book removed',
+    data: removedBook,
+  };
+}
 }
